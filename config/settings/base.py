@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "auditlog",
     # Local apps
+    "apps.sensor",
 ]
 
 MIDDLEWARE = [
@@ -105,7 +106,7 @@ REST_FRAMEWORK = {
         "anon": "100/day",
         "user": "1000/day",
     },
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
 }
 
