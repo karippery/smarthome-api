@@ -1,0 +1,103 @@
+[project]
+name = "smarthome"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "django>=5.2.9",
+    "django-auditlog>=3.4.1",
+    "django-cors-headers>=4.9.0",
+    "django-environ>=0.12.0",
+    "django-filter>=25.2",
+    "django-redis>=6.0.0",
+    "djangorestframework>=3.16.1",
+    "djangorestframework-simplejwt>=5.5.1",
+    "gunicorn>=23.0.0",
+    "polars>=1.38.1",
+    "psycopg2-binary>=2.9.11",
+    "python-json-logger>=4.0.0",
+    "sentry-sdk>=2.48.0",
+    "whitenoise>=6.11.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "django-extensions>=4.1",
+    "drf-spectacular>=0.29.0",
+    "factory-boy>=3.3.3",
+    "pytest>=9.0.2",
+    "pytest-django>=4.11.1",
+    "black>=25.12.0",
+    "flake8>=7.3.0",
+    "pre-commit>=4.5.1",
+    "pytest-cov>=7.0.0",
+    "django-silk>=5.4.3",
+    "pip-audit>=2.10.0",
+]
+
+[tool.pytest]
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+python_files = ["tests.py", "test_*.py"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+    "--cov=.",
+    "--cov-report=term-missing",
+    "--cov-config=pyproject.toml",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["."]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "config/urls.py",
+    "config/wsgi.py",
+    "config/asgi.py",
+    "manage.py",
+    "test.py"
+]
+
+# pyproject.toml (if using [scripts] - uv supports this)
+[project.scripts]
+lint = "flake8 ."
+format = "black ."
+check-format = "black --check ."
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  \.eggs
+  | \.git
+  | \.mypy_cache
+  | \.tox
+  | venv
+  | build
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = [
+  "E203",  # whitespace before ':'
+  "W503",  # line break before binary operator (conflicts with Black)
+]
+exclude = [
+  ".git",
+  "__pycache__",
+  "venv",
+  ".venv",
+  "build",
+  "migrations",
+  "config/settings",
+]
+max-complexity = 10
+per-file-ignores = [
+  "config/settings/*:F403,F405",
+]
