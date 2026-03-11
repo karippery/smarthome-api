@@ -48,6 +48,7 @@ urlpatterns = [
 
 # URL Apps Api
 urlpatterns += [
+    path("api/", include("apps.sensor.urls", namespace="sensor")),
 ]
 
 # Add Debug Toolbar URLs only in development
