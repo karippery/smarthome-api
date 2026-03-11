@@ -1,7 +1,6 @@
 import os
 
 from django.core.management.base import BaseCommand, CommandError
-from django.conf import settings
 
 from apps.sensor.services import import_sensor_data, IngestionStats
 

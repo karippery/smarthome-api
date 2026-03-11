@@ -1,39 +1,3 @@
-# tests/test_views.py
-"""
-API test suite — all 7 endpoints + their filters.
-
-Fixes applied vs previous version:
-  1. UNIQUE CONSTRAINT ERRORS (TestHourlyAggregationView)
-     Tests that create multiple readings at the same timestamp now use
-     explicit unique timestamps (now, now-1min, now-2min etc.).
-
-  2. DATA LEAKAGE (TestQualitySummary, TestSensorHealth)
-     Tests that assert exact counts/states now create their own isolated
-     sensors with unique IDs instead of relying on shared fixtures.
-     The 'multi_sensor_readings' fixture uses MULTI_* prefix IDs so it
-     never collides with the 'sensor' fixture's KITCHEN_01.
-
-  3. DATE RANGE FILTER (TestQualityLogListView::test_filter_by_date_range)
-     DataQualityLogFactory.detected_at was auto_now_add in the model but
-     the factory was passing it as a kwarg — ignored silently. Fixed by
-     using update() after creation to set detected_at explicitly.
-
-  4. HEALTH STATUS THRESHOLDS (TestSensorHealthView)
-     Tests now create exact reading counts to hit the score thresholds:
-       degraded: need avg 70–89  → 7×100 + 3×55 = avg 83.5 ✓
-       critical: need avg < 70   → all readings at 50.0 ✓
-     Readings use timestamps within the default 24h window.
-
-  5. GAP DETECTION (TestSensorHealthView::test_gap_detected_for_silent_sensor)
-     The sensor health view filters by timestamp__gte=since (last 24h).
-     A reading 3h ago IS within 24h — it appears in the queryset but
-     latest_ts is 3h ago → gap_detected=True. The test was correct;
-     the issue was data leakage from other fixtures pushing latest_ts
-     to now. Fixed by using an isolated sensor ID.
-
-  6. RECENT FLAGS (TestSensorHealthView::test_recent_flags_populated)
-     Same leakage issue — fixed with isolated sensor ID.
-"""
 
 import pytest
 from django.utils import timezone

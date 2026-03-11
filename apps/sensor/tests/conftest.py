@@ -1,14 +1,3 @@
-# tests/conftest.py
-"""
-Shared fixtures for sensor API tests.
-
-Key design decisions:
-  - All fixtures use unique sensor_ids to prevent cross-test data leakage.
-  - multi_sensor_readings uses completely isolated sensors so QualitySummary
-    tests that call without ?sensor_id= get exactly the expected row count.
-  - @pytest.fixture(scope="function") is default — each test gets a clean DB.
-"""
-
 import pytest
 from django.utils import timezone
 from datetime import timedelta

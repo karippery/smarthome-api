@@ -1,25 +1,6 @@
-# tests/test_services.py
-"""
-Business logic tests for:
-  - apps/sensor/services.py   — ingestion pipeline + quality detection
-  - management command        — import_sensors CLI
-
-Test structure:
-  TestLoadCsvWithPolars           — CSV loading and schema enforcement
-  TestNormalizeDataframe          — timestamp normalization, whitespace stripping
-  TestDataframToReadingObjects    — Polars → Django model conversion
-  TestBulkInsertReadings          — atomic insert, duplicate handling
-  TestDetectStuckAtValues         — Detection Strategy 1
-  TestDetectOutliers              — Detection Strategy 2
-  TestApplyQualityFlags           — flag writing + audit log creation
-  TestRunQualityChecks            — orchestration of both strategies
-  TestImportSensorData            — full pipeline end-to-end
-  TestImportSensorsCommand        — management command CLI
-"""
 
 import csv
 import os
-import tempfile
 
 import polars as pl
 import pytest
