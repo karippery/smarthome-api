@@ -1,17 +1,3 @@
-# sensor/management/commands/import_sensors.py
-"""
-Django management command for importing sensor data.
-
-Usage:
-    python manage.py import_sensors path/to/data.csv
-    python manage.py import_sensors path/to/data.csv --skip-quality
-
-Design Decision: Keep command thin; delegate to services.py.
-This makes the logic testable without Django's command framework.
-
-FIX: Now properly passes --skip-quality flag to service layer.
-"""
-
 import os
 
 from django.core.management.base import BaseCommand, CommandError
@@ -42,7 +28,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         file_path = options["file_path"]
-        skip_quality = options["skip_quality"]  # FIX: Capture the flag
+        skip_quality = options["skip_quality"]  
         dry_run = options["dry_run"]
 
         # Validate file exists
@@ -53,7 +39,7 @@ class Command(BaseCommand):
             raise CommandError(f"Expected CSV file, got: {file_path}")
 
         self.stdout.write(f"Processing: {file_path}")
-        self.stdout.write(f"Skip quality checks: {skip_quality}")  # FIX: Log the flag
+        self.stdout.write(f"Skip quality checks: {skip_quality}")  
         self.stdout.write(f"Dry run: {dry_run}")
         self.stdout.write("-" * 50)
 
@@ -65,7 +51,6 @@ class Command(BaseCommand):
 
         # Run import
         try:
-            # FIX: Pass skip_quality to service
             stats = import_sensor_data(file_path, skip_quality=skip_quality)
             self._print_stats(stats)
         except Exception as e:
