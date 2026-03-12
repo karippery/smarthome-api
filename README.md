@@ -39,6 +39,10 @@ The pipeline ensures data moves smoothly from ingestion to consumption:
 
 This flow functions end-to-end within the containerized environment.
 
+#### Sample data
+
+<img src="assets/data.png" alt="Sample data" width="600" />
+
 ---
 
 ## Quick Start
@@ -75,8 +79,13 @@ This flow functions end-to-end within the containerized environment.
     docker-compose exec smarthome_web python manage.py import_sensors data/sensor_data.csv
     ```
 
+    <img src="assets/screenshots1.png" alt="Architecture Diagram" width="400" />
+
 5.  **Access API documentation:**
     - Swagger UI: http://localhost:8000/api/swagger/
+    - Redoc: http://localhost:8000/api/redoc/
+
+    <img src="assets/swagger.png" alt="Architecture Diagram" width="600" />
 
 ## API Reference
 
